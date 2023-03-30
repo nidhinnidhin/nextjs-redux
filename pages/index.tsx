@@ -1,11 +1,24 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { RootState } from "./store";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  countValue,
+  decrease,
+  decrement,
+  increase,
+  increment,
+} from "./slice/counterSlice";
+import { selectValue } from "./slice/counterSlice";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const count = useSelector(selectValue);
+  const basketCount = useSelector(countValue);
+  const dispatch = useDispatch();
   return (
     <>
       <Head>
@@ -14,110 +27,62 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+      <div>
+        <h1>value of the count is : {count}</h1>
+        <button
+          onClick={() => dispatch(increment())}
+          style={{
+            margin: "20px",
+            height: "30px",
+            width: "100px",
+            cursor: "pointer",
+          }}
+        >
+          increment
+        </button>
+
+        <button
+          onClick={() => dispatch(decrement())}
+          style={{
+            margin: "20px",
+            height: "30px",
+            width: "100px",
+            cursor: "pointer",
+          }}
+        >
+          decrement
+        </button>
+        <hr />
+
+        <button
+          onClick={() => dispatch(increase())}
+          style={{
+            margin: "20px",
+            height: "30px",
+            width: "100px",
+            cursor: "pointer",
+          }}
+        >
+          Increase
+        </button>
+        <h2>Basket value: {basketCount}</h2>
+        {basketCount >=1 ?
+
+          <button
+            onClick={() => dispatch(decrease())}
+            style={{
+              margin: "20px",
+              height: "30px",
+              width: "100px",
+              
+              cursor: "pointer",
+            }}
             >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+            Decrease
+          </button>
+          :""
+        }
+      </div>
     </>
-  )
+  );
 }
